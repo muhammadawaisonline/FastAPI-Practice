@@ -23,5 +23,10 @@ class BlogType(str, Enum):
 def blog_type(type: BlogType):
     return {"message": f"blog type {type}"}
 
+@app.get("/blog/{id}/comment/{comment_id}")
+def get_comment(id:int, comment_id:int, valid:bool=True, username: Optional[str]= None ):
+    return {"message": f"In blog No.{id} comment {comment_id} is {valid} provided by user {username}"}
+
+
 
 
