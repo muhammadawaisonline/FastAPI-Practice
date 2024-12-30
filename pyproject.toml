@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "fastapi practice"
+version = "1.0.0"
+description = "Here I will practice FastAPI projects"
+authors = ["Muhammad Awais"]
+license = "2.0.0"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "3.11.4"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
