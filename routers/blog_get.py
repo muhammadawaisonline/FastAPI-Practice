@@ -27,7 +27,8 @@ class BlogType(str, Enum):
 
 @router.get("/type/{type}",
             summary= "Retrieve all blogs",
-            description="Retrieve all Blogs based on Type"
+            description="Retrieve all Blogs based on Type",
+            response_description="List of all blogs"
 
             )
 def blog_type(type: BlogType):
