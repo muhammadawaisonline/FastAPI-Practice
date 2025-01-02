@@ -25,10 +25,23 @@ class BlogType(str, Enum):
     howto = "howto"
 
 
-@router.get("/type/{type}")
+@router.get("/type/{type}",
+            summary= "Retrieve all blogs",
+            description="Retrieve all Blogs based on Type"
+
+            )
 def blog_type(type: BlogType):
     return {"message": f"blog type {type}"}
 
 @router.get("/{id}/comment/{comment_id}", tags=["comment"])
 def get_comment(id:int, comment_id:int, valid:bool=True, username: Optional[str]= None ):
+    """
+    Stimuste retrieving content from Blog
+
+    - **id** manadatory path parameter
+    - **comment_id** mandatory path parameter
+    - **valid** Optional query parameter
+    - **username** Optional query parameter
+    """
+
     return {"message": f"In blog No.{id} comment {comment_id} is {valid} provided by user {username}"}
