@@ -1,4 +1,4 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Query
 from pydantic import BaseModel
 from typing import Optional
 
@@ -13,7 +13,22 @@ class BlogModel(BaseModel):
     nb_comments:int
     published:Optional[bool]
 
-@router.post("/new")
-def create_blog(blog: BlogModel):
+@router.post("/new/{id}")
+def create_blog(blog: BlogModel, id:int, version:int = 1):
     blog.title
-    return {"data":blog}
+    return {
+        "id":id,
+        "version":version,
+        "data":blog}
+
+@router.post("/new/{id}/comment")
+def create_comment(blog: BlogModel, id:int, comment_id=Query(
+
+    title = "Id of the comment",
+    description= "Some description of the comment_id"
+) ):
+    return {
+        "blog": blog,
+        "id": id,
+        "comment_id": comment_id
+    }
