@@ -29,8 +29,7 @@ def create_comment(blog: BlogModel, id:int, comment_id=Query(
     alias= "commentId"
 ), 
     content:str = Body(...,
-                       min_length=10,
-                       max_length=50) ):
+                       regex= "^[a-z\s]*$") ):
     return {
         "blog": blog,
         "id": id,
