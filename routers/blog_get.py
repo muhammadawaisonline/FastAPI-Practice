@@ -1,6 +1,7 @@
 from enum import Enum
-from typing import Optional
-from fastapi import Response, status, APIRouter
+from routers.blog_post import required_functionality
+from typing import Optional, Dict
+from fastapi import Response, status, APIRouter, Depends
 router = APIRouter(
     prefix="/blog",
     tags=["blog"]
@@ -11,7 +12,7 @@ router = APIRouter(
 #     return {"message": f" all {page_size} blogs on {page} page"}
 
 @router.get("/{id}", status_code=status.HTTP_404_NOT_FOUND)
-def get_blog(id: int, response: Response):
+def get_blog(id: int, response: Response, req_parameter: Dict = Depends(required_functionality)):
     if id > 5:
         response.status_code = status.HTTP_404_NOT_FOUND
         return {"error": f"blog id {id} not found"}
@@ -31,6 +32,10 @@ class BlogType(str, Enum):
             response_description="List of all blogs"
 
             )
+def get_blog(page= 1, page_size: Optional[int] = None,  req_parameter: Dict = Depends(required_functionality) ):
+    return {"message": f"all {page_size} blogs on page {page}", "req": req_parameter}
+
+@router.get("./type/{type}")
 def blog_type(type: BlogType):
     return {"message": f"blog type {type}"}
 
@@ -46,3 +51,4 @@ def get_comment(id:int, comment_id:int, valid:bool=True, username: Optional[str]
     """
 
     return {"message": f"In blog No.{id} comment {comment_id} is {valid} provided by user {username}"}
+

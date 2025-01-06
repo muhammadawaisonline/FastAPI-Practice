@@ -46,3 +46,9 @@ def create_comment(blog: BlogModel, id:int, comment_title: int =Query(
         "version": v,
         "comment_id": comment_id
     }
+
+def required_functionality():
+    return {"message": "learn FASTAPI is important"}
+
+
+
