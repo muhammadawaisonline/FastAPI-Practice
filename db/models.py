@@ -1,9 +1,9 @@
-from db.database import base
+from db.database import Base
 from sqlalchemy import Column, Integer, String, Boolean, ForeignKey 
 
 
 
-class DbUser(base):
+class DbUser(Base):
     __tablename__ = 'users'
     id = Column(Integer, primary_key=True, index= True)
     username = Column(String)

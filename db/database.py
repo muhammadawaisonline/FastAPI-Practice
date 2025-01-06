@@ -7,7 +7,15 @@ SQLALCHEMY_DATABASE_URL = "sqlite:///./fastapi_practice.db"
 engine = create_engine(
     SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False}
 )
-sessionlocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
-base = declarative_base()
+Base = declarative_base()
+def get_db():   
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
+        
+
 
