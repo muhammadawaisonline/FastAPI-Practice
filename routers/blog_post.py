@@ -1,17 +1,23 @@
-from fastapi import APIRouter, Query, Body
+from fastapi import APIRouter, Query, Body, Path
 from pydantic import BaseModel
-from typing import Optional, List
+from typing import Optional, List, Dict
 
 router = APIRouter(
     prefix="/blog",
     tags=["blog"]
 )
+class Image(BaseModel):
+    url:str
+    alias:str
 
 class BlogModel(BaseModel):
     title:str
     content:str
     nb_comments:int
     published:Optional[bool]
+    tags:List[str] = []
+    metadata:Dict[str, str] = {"key1":"val1"}
+    image:Optional[Image] = None
 
 @router.post("/new/{id}")
 def create_blog(blog: BlogModel, id:int, version:int = 1):
@@ -22,7 +28,7 @@ def create_blog(blog: BlogModel, id:int, version:int = 1):
         "data":blog}
 
 @router.post("/new/{id}/comment")
-def create_comment(blog: BlogModel, id:int, comment_id: int =Query(
+def create_comment(blog: BlogModel, id:int, comment_title: int =Query(
 
     title = "Id of the comment",
     description= "Some description of the comment_id",
@@ -30,11 +36,13 @@ def create_comment(blog: BlogModel, id:int, comment_id: int =Query(
 ), 
     content:str = Body(...,
                        regex= "^[a-z\s]*$") ,
-                       v: Optional[List[str]] = Query(["1.0", "1.1", "1.2 "])):
+                       v: Optional[List[str]] = Query(["1.0", "1.1", "1.2 "]),
+                       comment_id: int = Path( gt=5, le=10)):
     return {
         "blog": blog,
         "id": id,
-        "comment_id": comment_id,
+        "comment_title": comment_title,
         "content": content,
-        "version": v
+        "version": v,
+        "comment_id": comment_id
     }
