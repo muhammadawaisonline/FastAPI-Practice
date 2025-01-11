@@ -18,3 +18,7 @@ def create_user(db: Session, request:UserBase):
 
 def get_all_users(db:Session):
     return db.query(DbUser).all()
+
+
+def get_user(db:Session, id:int):
+    return db.query(DbUser).filter(DbUser.id == id).first()
