@@ -34,5 +34,14 @@ def update_user(db:Session, id:int, request:UserBase):
     db.commit()
     return "ok"
 
+
+def delete_user(id:int, db:Session):
+    user = db.query(DbUser).filter(DbUser.id == id).first()
+    db.delete(user)
+    db.commit()
+    return "ok"
+
+
+
     
 
