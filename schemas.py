@@ -1,11 +1,18 @@
 from pydantic import BaseModel
 from typing import List
-class ArticleBase(BaseModel):
+# Article Inside User Display
+class Article(BaseModel):
     title:str
     content:str
     published:bool
     class config():
-        orm_mode = True
+        orm_model = True
+
+class ArticleBase(BaseModel):
+    title:str
+    content:str
+    published:bool
+    creator_id:int
 
 
 class User(BaseModel):
