@@ -30,6 +30,7 @@ def update_user(db:Session, id:int, request:UserBase):
         DbUser.username: request.username,
         DbUser.email: request.email,
         DbUser.password: Hash.bcrypt(request.password)
+        
     })
     db.commit()
     return "ok"
