@@ -6,7 +6,7 @@ from routers import article
 from db.database import engine
 from routers import user
 from exceptions import StoryException
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, PlainTextResponse
 
 
 app = FastAPI()
@@ -25,6 +25,9 @@ def story_exception_handler(request: Request,  exc: StoryException):
         status_code=418,
         content= { "detail": exc.name}
     )
+@app.exception_handler(StoryException)
+def custom_handler(request: Request, exc:StoryException):
+    return PlainTextResponse(str(exc), status_code= 400)
 
 
 models.Base.metadata.create_all(engine)
